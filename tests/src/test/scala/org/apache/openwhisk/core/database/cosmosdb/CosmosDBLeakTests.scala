@@ -48,7 +48,7 @@ class CosmosDBLeakTests extends FlatSpec with CosmosDBStoreBehaviorBase {
   private var initialLevel: Level = _
 
   override protected def beforeAll(): Unit = {
-    RecordingLeakDetectorFactory.register()
+    //RecordingLeakDetectorFactory.register()
     initialLevel = ResourceLeakDetector.getLevel
     ResourceLeakDetector.setLevel(Level.PARANOID)
     super.beforeAll()
@@ -58,9 +58,9 @@ class CosmosDBLeakTests extends FlatSpec with CosmosDBStoreBehaviorBase {
     super.afterAll()
     ResourceLeakDetector.setLevel(initialLevel)
 
-    withClue("Recorded leak count should be zero") {
-      RecordingLeakDetectorFactory.counter.cur shouldBe 0
-    }
+   // withClue("Recorded leak count should be zero") {
+   //   RecordingLeakDetectorFactory.counter.cur shouldBe 0
+   // }
   }
 
   it should "not happen in performing subject query" ignore {
@@ -75,7 +75,7 @@ class CosmosDBLeakTests extends FlatSpec with CosmosDBStoreBehaviorBase {
     implicit val patienceConfig: PatienceConfig = PatienceConfig(timeout = 30.minutes)
 
     Source(1 to 500)
-      .filter(_ => RecordingLeakDetectorFactory.counter.cur == 0)
+      //.filter(_ => RecordingLeakDetectorFactory.counter.cur == 0)
       .mapAsync(5) { i =>
         if (i % 5 == 0) println(i)
         queryName(ns)
@@ -85,9 +85,9 @@ class CosmosDBLeakTests extends FlatSpec with CosmosDBStoreBehaviorBase {
 
     System.gc()
 
-    withClue("Recorded leak count should be zero") {
-      RecordingLeakDetectorFactory.counter.cur shouldBe 0
-    }
+    //withClue("Recorded leak count should be zero") {
+    //  RecordingLeakDetectorFactory.counter.cur shouldBe 0
+    //}
   }
 
   def queryName(ns: Namespace)(implicit tid: TransactionId) = {

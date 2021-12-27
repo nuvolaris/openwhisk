@@ -1,0 +1,25 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [   
+        
+        {
+            "type": "scala",
+            "name": "StandaloneOpenWhisk",
+            "request": "launch",
+            "mainClass": "org.apache.openwhisk.standalone.StandaloneOpenWhisk",
+            "vmArgs": "-Dwhisk.standalone.host.name=0.0.0.0",
+            "args": ["--dev-kcf", "-c", "../standalone/etc/standalone-kcf.conf", "--no-browser"]
+        },
+        {
+            "type": "scala",
+            "request": "attach",
+            "name": "Debug StandaloneOpenWhisk",
+            "hostName": "localhost",
+            "port": 7896,
+            "buildTarget": "standalone"
+        }
+    ]
+}

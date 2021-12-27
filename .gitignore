@@ -85,7 +85,7 @@ tests/performance/gatling_tests/.built
 intellij-run-config.groovy
 
 # VSCode
-.vscode/
+#.vscode/
 
 # route management
 core/routemgmt/createApi/apigw-utils.js
