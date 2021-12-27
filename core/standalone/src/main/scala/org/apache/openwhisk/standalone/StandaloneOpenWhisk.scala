@@ -226,38 +226,39 @@ object StandaloneOpenWhisk extends SLF4JLogging {
 
     val owPort = conf.port()
     val (dataDir, workDir) = initializeDirs(conf)
-    val (dockerClient, dockerSupport) = prepareDocker(conf)
+    //val (dockerClient, dockerSupport) = prepareDocker(conf)
 
     val defaultSvcs = Seq(
       ServiceContainer(owPort, s"http://${StandaloneDockerSupport.getLocalHostName()}:$owPort", "Controller"))
 
-    val (apiGwApiPort, apiGwSvcs) = if (conf.apiGw()) {
+    /*val (apiGwApiPort, apiGwSvcs) = if (conf.apiGw()) {
       startApiGateway(conf, dockerClient, dockerSupport)
-    } else (-1, Seq.empty)
+    } else (-1, Seq.empty)*/
 
-    val (kafkaDockerPort, kafkaSvcs) = if (conf.kafka() || conf.userEvents()) {
+    /*val (kafkaDockerPort, kafkaSvcs) = if (conf.kafka() || conf.userEvents()) {
       startKafka(workDir, dockerClient, conf, conf.kafkaUi())
-    } else (-1, Seq.empty)
+    } else (-1, Seq.empty)*/
 
-    val couchSvcs = if (conf.couchdb()) Some(startCouchDb(dataDir, dockerClient)) else None
-    val userEventSvcs =
+    //val couchSvcs = if (conf.couchdb()) Some(startCouchDb(dataDir, dockerClient)) else None
+    /*val userEventSvcs =
       if (conf.userEvents() || conf.devUserEventsPort.isSupplied)
         startUserEvents(conf.port(), kafkaDockerPort, conf.devUserEventsPort.toOption, workDir, dataDir, dockerClient)
-      else Seq.empty
+      else Seq.empty*/
 
     val pgLauncher = if (conf.noUi()) None else Some(createPgLauncher(owPort, conf))
     val pgSvc = pgLauncher.map(pg => Seq(pg.run())).getOrElse(Seq.empty)
 
-    val svcs = Seq(defaultSvcs, apiGwSvcs, couchSvcs.toList, kafkaSvcs, userEventSvcs, pgSvc).flatten
+    //val svcs = Seq(defaultSvcs, apiGwSvcs, couchSvcs.toList, kafkaSvcs, userEventSvcs, pgSvc).flatten
+    val svcs = Seq(defaultSvcs, pgSvc).flatten
     new ServiceInfoLogger(conf, svcs, dataDir).run()
 
     startServer(conf)
     new ServerStartupCheck(conf.serverUrl, "OpenWhisk").waitForServerToStart()
 
     if (canInstallUserAndActions(conf)) {
-      if (conf.apiGw()) {
+      /*if (conf.apiGw()) {
         installRouteMgmt(conf, workDir, apiGwApiPort)
-      }
+      }*/
       pgLauncher.foreach(_.install())
     }
   }
