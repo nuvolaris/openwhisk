@@ -83,7 +83,8 @@ object StandaloneDockerSupport {
   }
 
   def isPortFree(port: Int): Boolean = {
-    Try(new Socket("localhost", port).close()).isFailure
+    val hostToCheck = sys.props.get("whisk.standalone.host.name").getOrElse("localhost")
+    Try(new Socket(hostToCheck, port).close()).isFailure
   }
 
   def createRunCmd(name: String,
