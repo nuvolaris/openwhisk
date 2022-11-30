@@ -101,3 +101,7 @@ core/routemgmt/getApi/utils.js
 .*-version
 .metals/
 .bloop/
+.vscode/
+.image-tag
+.env
+tmp/
