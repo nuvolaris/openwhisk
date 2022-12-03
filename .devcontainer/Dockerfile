@@ -44,8 +44,15 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash ;\
     apt-get update && sudo apt-get install yarn
 # task
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
+# kind
+RUN curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64 ;\
+    chmod +x ./kind ; mv ./kind /usr/local/bin/kind
+# ansible
+COPY dockerip.yml /etc/dockerip.yml
+COPY setup.sh /etc/setup.sh
+ENV ANSIBLE_CMD="ansible-playbook -i environments/local -e docker_image_prefix=testing -e @/etc/dockerip.yml"
+# commands
 ENV HOME=/home/nuvolaris
-ENV ANSIBLE_CMD="ansible-playbook -i environments/local -e docker_image_prefix=testing"
 ENV GRADLE_PROJS_SKIP=""
 WORKDIR /home/nuvolaris
 ENTRYPOINT /usr/bin/socat \
