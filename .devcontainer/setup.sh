@@ -1,7 +1,7 @@
     OW=/workspaces/openwhisk
     export ANSIBLE_CMD="$ANSIBLE_CMD -e @$OW/.devcontainer/dockerip.yml"
     # super hacky trick to get the dockerid - assuming there is only one starting with vsc-
-    DOCKERID=$(docker ps | awk '/vsc-/{print $1}')
+    DOCKERID=$(docker ps | awk '/vsc-openwhisk/{print $1}')
     # inspecting the image to find the real path on the host
     REAL_PWD=$(docker inspect $DOCKERID  | jq -r '.[0].Config.Labels["devcontainer.local_folder"]')
     # linking openwhisk to the home

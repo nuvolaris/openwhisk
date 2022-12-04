@@ -55,6 +55,7 @@ ENV ANSIBLE_CMD="ansible-playbook -i environments/local -e docker_image_prefix=t
 ENV HOME=/home/nuvolaris
 ENV GRADLE_PROJS_SKIP=""
 WORKDIR /home/nuvolaris
+
 ENTRYPOINT /usr/bin/socat \
     UNIX-LISTEN:/var/run/docker.sock,fork,mode=660,user=nuvolaris \
     UNIX-CONNECT:/var/run/docker-host.sock
