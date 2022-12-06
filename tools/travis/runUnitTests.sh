@@ -26,7 +26,7 @@ cd $ROOTDIR/tools/travis
 export TESTCONTAINERS_RYUK_DISABLED="true"
 export ORG_GRADLE_PROJECT_testSetName="REQUIRE_ONLY_DB"
 
-./scan.sh
+#./scan.sh
 
 ./setupPrereq.sh
 
