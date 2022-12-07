@@ -85,8 +85,6 @@
       TZ: "{{ docker.timezone }}"
       ES_JAVA_OPTS: "{{ db.elasticsearch.java_opts }}"
 
-      
-
 - name: wait until ElasticSearch in this host is up and running
   uri:
     url: "{{ db.elasticsearch.protocol }}://{{ ansible_host }}:{{ http_port }}"
