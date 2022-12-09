@@ -344,9 +344,10 @@
     userns_mode: "{{ userns_mode | default('') }}"
     pid_mode: "{{ pid_mode | default('') }}"
     privileged: "{{ privileged | default('no') }}"
+    #command: sleep inf
     command:
       /bin/sh -c
-      "exec /init.sh {{ controller_index }}
+      "exec /home/owuser/init.sh {{ controller_index }}
       >> /logs/{{ controller_name }}_logs.log 2>&1"
 
 - name: wait until the Controller in this host is up and running
