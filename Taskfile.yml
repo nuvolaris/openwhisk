@@ -1,11 +1,13 @@
 version: '3'
 vars:
-  BASETAG: 1.0.0-nuvolaris
-  TAG:
-    sh: git describe --tags --abbrev=0 2>/dev/null 
+  BRANCH: 
+    sh: git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
 
 tasks:
   setup: 
     silent: true
 
-  image-tag: git tag -d $(git tag) ; git tag -f {{.BASETAG}}.$(date +%y%m%d%H) ; git tag
+  tag-and-push:
+    - git tag -d $(git tag) 
+    - git tag -f {{.BRANCH}}.$(date +%y%m%d%H) 
+    - git tag
