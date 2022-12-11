@@ -1,0 +1,11 @@
+version: '3'
+vars:
+  BASETAG: 1.0.0-nuvolaris
+  TAG:
+    sh: git describe --tags --abbrev=0 2>/dev/null 
+
+tasks:
+  setup: 
+    silent: true
+
+  image-tag: git tag -d $(git tag) ; git tag -f {{.BASETAG}}.$(date +%y%m%d%H) ; git tag
