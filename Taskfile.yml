@@ -1,13 +1,32 @@
 version: '3'
+
 vars:
   BRANCH: 
     sh: git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+  TEST: ""
 
 tasks:
   setup: 
     silent: true
 
-  tag-and-push:
+  tag:
     - git tag -d $(git tag) 
-    - git tag -f {{.BRANCH}}.$(date +%y%m%d%H) 
+    - git tag -f {{.BRANCH}}.$(date +%y%m%d%H)
     - git tag
+  
+
+  run-test:
+    silent: true
+    cmds:
+    - |-
+      if test -z "{{.TEST}}" ; 
+      then ls tools/github/run* 
+      echo use TEST=x of Unit, System etc
+      else 
+      ./tools/github/setup.sh
+      ./tools/github/run{{.TEST}}Tests.sh
+      fi
+    env:
+      TEST_SUITE: "{{.TEST}}"
+
+
