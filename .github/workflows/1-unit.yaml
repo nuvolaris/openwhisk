@@ -27,7 +27,6 @@ on:
 env:
   # openwhisk env
   TEST_SUITE: Unit
-  JAVA_DISTRO: adopt-openj9
   ANSIBLE_CMD: "ansible-playbook -i environments/local -e docker_image_prefix=testing"
   GRADLE_PROJS_SKIP: ""
 
