@@ -43,13 +43,6 @@ TAGS=""
 
 LOG_DIR="$(date +%Y-%m-%d)/${LOG_NAME}-${GH_BUILD}-${GH_BRANCH}"
 
-# Perf logs are typically about 20MB and thus rapidly fill our box account.
-# Disable upload to reduce the interval at which we need to manually clean logs from box.
-if [ "$LOG_NAME" == "Performance" ]; then
-    echo "Skipping upload of perf logs to conserve space"
-    exit 0
-fi
-
 ansible-playbook -i ansible/environments/local ansible/logs.yml
 
 ./tools/build/checkLogs.py logs "$TAGS"
