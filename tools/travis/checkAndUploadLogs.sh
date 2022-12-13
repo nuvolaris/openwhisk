@@ -44,5 +44,11 @@ ansible-playbook -i ansible/environments/local ansible/logs.yml
 
 ./tools/travis/box-upload.py "$TRAVIS_BUILD_DIR/logs" "$LOG_TAR_NAME"
 
+BUCKET_URL="https://$AWS_BUCKET.s3.$AWS_REGION.amazonaws.com"
+
+echo "logs=${BUCKET_URL}/index.html#$LOG_TAR_NAME" >>"${GITHUB_OUTPUT:-/dev/stdout}"
+echo "report=${BUCKET_URL}/${LOG_TAR_NAME}/test-reports/reports/tests/testCoverageLean/index.html" >>"${GITHUB_OUTPUT:-/dev/stdout}"
+
+
 echo "Uploaded Logs with name $LOG_TAR_NAME"
 echo "Time taken for ${0##*/} is $SECONDS secs"
