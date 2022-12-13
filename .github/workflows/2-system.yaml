@@ -65,6 +65,6 @@ jobs:
              $GH_BUILD: ${{ steps.tests.outcome }}
              $'\nbranch:' $GH_BRANCH  
              $'\nlogs:' ${{ steps.logs.outputs.logurl }}
-             $'\report:' ${{ steps.logs.outputs.logurl }}/test-reports/reports/tests/testCoverageLean/index.html
+             $'\nreport:' ${{ steps.logs.outputs.logurl }}/test-reports/reports/tests/testCoverageLean/index.html
       - name: Results
         run: test "${{ steps.tests.outcome }}" ==  "success"

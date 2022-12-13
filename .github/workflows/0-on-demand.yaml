@@ -84,7 +84,8 @@ jobs:
              ./tools/github/writeOnSlack.sh "[$TEST_SUITE]"
              $GH_BUILD: ${{ steps.tests.outcome }}
              $'\nbranch:' $GH_BRANCH  
-             $'\nlogurl:' ${{ steps.logs.outputs.logurl }}
+             $'\nlogs:' ${{ steps.logs.outputs.logurl }}
+             $'\nreport:' ${{ steps.logs.outputs.logurl }}/test-reports/reports/tests/testCoverageLean/index.html
       - name: Debug Action (if requested)
         run:  ./tools/github/debugAction.sh
       - name: Wait for Debug (if requested)
