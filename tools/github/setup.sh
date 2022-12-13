@@ -16,9 +16,9 @@
 # limitations under the License.
 #
 
-if [[ $TEST_SUITE =~ Dummy ]]
-then echo skiping setup ; exit 0
-fi
+#if [[ $TEST_SUITE =~ Dummy ]]
+#then echo skipping setup ; exit 0
+#fi
 
 # retries a command for five times and exits with the non-zero exit if even after
 # the retries the command did not succeed.
