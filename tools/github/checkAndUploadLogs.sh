@@ -45,7 +45,7 @@ LOG_DIR="$(date +%Y-%m-%d)/${LOG_NAME}-${GH_BUILD}-${GH_BRANCH}"
 BUCKET_URL="https://$AWS_BUCKET.s3.$AWS_REGION.amazonaws.com"
 
 echo "logs=${BUCKET_URL}/index.html#${LOG_DIR}" >>${GITHUB_OUTPUT:-/dev/stdin}
-echo "reports=${BUCKET_URL}/${LOG_DIR}/test-reports/reports/tests/testCoverageLean/index.html" >>${GITHUB_OUTPUT:-/dev/stdin}
+echo "report=${BUCKET_URL}/${LOG_DIR}/test-reports/reports/tests/testCoverageLean/index.html" >>${GITHUB_OUTPUT:-/dev/stdin}
 
 
 ansible-playbook -i ansible/environments/local ansible/logs.yml
