@@ -66,6 +66,11 @@ tools/github/scan.sh
 # Preload alpine 3.5 to avoid issues with depending images
 retry docker pull alpine:3.5
 
+# exit if dummy test suite skipping the long compilation when debugging
+if [[ $TEST_SUITE =~ Dummy ]]
+then echo skiping setup ; exit 0
+fi
+
 # Basic check that all code compiles and depdendencies are downloaded correctly.
 # Compiling the tests will compile all components as well.
 #
