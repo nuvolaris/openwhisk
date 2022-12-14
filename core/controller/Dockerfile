@@ -30,8 +30,6 @@ ENV SWAGGER_UI_DOWNLOAD_SHA256=3d7ef5ddc59e10f132fe99771498f0f1ba7a2cbfb9585f986
 # If this cannot be guaranteed, set `invoker_use_runc: false` in the ansible env.
 ENV DOCKER_VERSION=18.06.3-ce
 
-RUN apk add --update openssl
-
 # Uncomment to fetch latest version of docker instead: RUN wget -qO- https://get.docker.com | sh
 # Install docker client
 RUN curl -sSL -o docker-${DOCKER_VERSION}.tgz https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz && \
@@ -50,18 +48,15 @@ RUN curl -sSL -o swagger-ui-v${SWAGGER_UI_VERSION}.tar.gz --no-verbose https://g
     rm swagger-ui-v${SWAGGER_UI_VERSION}.tar.gz && \
     sed -i s#http://petstore.swagger.io/v2/swagger.json#/api/v1/api-docs#g /swagger-ui/index.html
 
-# Copy app jars
-ADD build/distributions/controller.tar /
+RUN useradd -m -u ${UID} -d /home/${NOT_ROOT_USER} -s /bin/bash ${NOT_ROOT_USER}
+ADD build/distributions/controller.tar /home/${NOT_ROOT_USER}/
+ADD init.sh /home/${NOT_ROOT_USER}/init.sh
+RUN chmod +x /home/${NOT_ROOT_USER}/init.sh ;\
+     chown -R ${NOT_ROOT_USER}:${NOT_ROOT_USER} /home/${NOT_ROOT_USER} ;\
+     chmod -R g+w /home/${NOT_ROOT_USER} 
 
-COPY init.sh /
-RUN chmod +x init.sh
-
-RUN adduser -D -u ${UID} -h /home/${NOT_ROOT_USER} -s /bin/bash ${NOT_ROOT_USER}
-
-# It is possible to run as non root if you dont need invoker capabilities out of the controller today
-# When running it as a non-root user this has implications on the standard directory where runc stores its data.
-# The non-root user should have access on the directory and corresponding permission to make changes on it.
-#USER ${NOT_ROOT_USER}
 
 EXPOSE 8080
+WORKDIR /home/${NOT_ROOT_USER}
+USER ${NOT_ROOT_USER}
 CMD ["./init.sh", "0"]
