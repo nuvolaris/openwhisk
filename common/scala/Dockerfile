@@ -14,16 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# if you change version of openjsk, also update tools/github/setup.sh to download the corresponding jdk
-FROM adoptopenjdk/openjdk11-openj9:x86_64-alpine-jdk-11.0.12_7_openj9-0.27.0
+FROM ubuntu:22.04
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+RUN apt-get update && apt-get -y upgrade &&\
+    apt-get -y install software-properties-common apt-utils \
+    curl wget gpg unzip zip vim telnet \
+    silversearcher-ag inetutils-ping locales &&\
+    locale-gen en_US.UTF-8
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /usr/share/keyrings/docker-archive-keyring.gpg &&\
+    wget -O- https://apt.corretto.aws/corretto.key | apt-key add -
+RUN ARCH=$(dpkg --print-architecture) ;\
+    echo "deb [arch=$ARCH signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list &&\
+    add-apt-repository 'deb https://apt.corretto.aws stable main'
+RUN apt-get -y install java-11-amazon-corretto-jdk=1:11.0.17.8-1
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-
-# Switch to the HTTPS endpoint for the apk repositories as per https://github.com/gliderlabs/docker-alpine/issues/184
-RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/https\:\/\/alpine.global.ssl.fastly.net/g' /etc/apk/repositories
-RUN apk add --update sed curl bash && apk update && apk upgrade
 
 RUN mkdir /logs
 
