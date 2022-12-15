@@ -53,8 +53,9 @@ ADD build/distributions/controller.tar /home/${NOT_ROOT_USER}/
 ADD init.sh /home/${NOT_ROOT_USER}/init.sh
 RUN chmod +x /home/${NOT_ROOT_USER}/init.sh ;\
      chown -R ${NOT_ROOT_USER}:${NOT_ROOT_USER} /home/${NOT_ROOT_USER} ;\
-     chmod -R g+w /home/${NOT_ROOT_USER} 
-
+     chmod -R g+w /home/${NOT_ROOT_USER} ;\
+     echo -e '#!'"/bin/bash\ncd /home/${NOT_ROOT_USER}\n./init.sh "'"$@"' >/init.sh ;\
+     chmod +x /init.sh
 
 EXPOSE 8080
 WORKDIR /home/${NOT_ROOT_USER}
