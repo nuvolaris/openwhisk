@@ -81,7 +81,6 @@ jobs:
              ./tools/github/writeOnSlack.sh
              "[$TEST_SUITE]" ${{ steps.tests.outcome }} on ${GH_BUILD}
              $'\nbranch:' $GH_BRANCH
-             $'\nbranch:' $GH_BRANCH
              $'\nmessage:' "$(git log -1 --oneline | cat)"
              $'\nlogs:' ${{ steps.logs.outputs.logs }}
              $'\nreport:' ${{ steps.logs.outputs.report }}
