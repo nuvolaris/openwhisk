@@ -20,11 +20,8 @@ name: Unit Tests
 on:
   # build on push
   push:
-<<<<<<< HEAD
     tags: '*'
     branches-ignore: '*'
-=======
->>>>>>> apache/master
   # build on pull requests
   pull_request:
 
@@ -61,20 +58,12 @@ jobs:
         run: "./tools/github/run${{ env.TEST_SUITE }}Tests.sh"
         continue-on-error: true
       - id: logs
-<<<<<<< HEAD
         name: Show Results and Upload Logs
-=======
-        name: Upload Logs
->>>>>>> apache/master
         run: ./tools/github/checkAndUploadLogs.sh ${{ env.TEST_SUITE }}
       - name: Slack Notification
         run: > 
              ./tools/github/writeOnSlack.sh
-<<<<<<< HEAD
-             "[$TEST_SUITE]" ${GH_BUILD}: ${{ steps.tests.outcome }}
-=======
              "[$TEST_SUITE]" ${{ steps.tests.outcome }} on ${GH_BUILD}
->>>>>>> apache/master
              $'\nbranch:' $GH_BRANCH
              $'\nmessage:' "$(git log -1 --oneline | cat)"
              $'\nlogs:' ${{ steps.logs.outputs.logs }}
