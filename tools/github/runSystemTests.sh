@@ -19,9 +19,11 @@
 
 set -e
 
+
 SCRIPTDIR=$(cd $(dirname "$0") && pwd)
 ROOTDIR="$SCRIPTDIR/../.."
 
+#ROOTDIR=$PWD/openwhisk
 cd $ROOTDIR/tools/travis
 
 export ORG_GRADLE_PROJECT_testSetName="REQUIRE_SYSTEM"

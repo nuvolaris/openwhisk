@@ -24,7 +24,7 @@ test -f "$INDEX" && lynx -dump file://$PWD/$INDEX | grep .
 for i in LOG_BUCKET LOG_ACCESS_KEY_ID LOG_SECRET_ACCESS_KEY LOG_REGION
 do
   if test -z "${!i}"
-  then echo "Required Environment Variable Missing: $i" ; exit 0
+  then echo "Required Environment Variable Missing: $i, skipping log upload" ; exit 0
   fi
 done
 
