@@ -166,7 +166,7 @@ kafka:
     protocols:
     - TLSv1.2
   protocol: "{{ kafka_protocol_for_setup }}"
-  version: "{{ kafka_version | default('2.13-2.7.0') }}"
+  version: "{{ kafka_version | default('2.13-2.8.1') }}"
   port: 9072
   advertisedPort: 9093
   ras:
@@ -186,7 +186,7 @@ kafka_connect_string: "{% set ret = [] %}\
 kafka_protocol_for_setup: "{{ kafka_protocol | default('PLAINTEXT') }}"
 
 zookeeper:
-  version: 3.4
+  version: 3.5.9
   port: 2181
 
 zookeeper_connect_string: "{% set ret = [] %}\
