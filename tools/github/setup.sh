@@ -44,13 +44,11 @@ sudo systemctl daemon-reload
 sudo systemctl start docker
 
 # installing right version of jdk
-
-#JDK=https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.12%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz
-JDK=https://corretto.aws/downloads/resources/11.0.17.8.1/amazon-corretto-11.0.17.8.1-linux-x64.tar.gz
-curl -sL $JDK | sudo tar xzf - -C /usr/local
+JDK=https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.12%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz
+curl -sL $JDK | sudo tar xzvf - -C /usr/local
 JAVA="$(which java)"
 sudo mv "$JAVA" "$JAVA"."$(date +%s)"
-sudo ln -sf /usr/local/amazon*/bin/java $JAVA
+sudo ln -sf /usr/local/jdk*/bin/java $JAVA
 java -version
 
 # Python
@@ -64,9 +62,6 @@ python -m pip install --user pydocumentdb
 
 # Support the revises log upload script
 python -m pip install --user humanize requests
-
-# lynx utility to show test results on the job run
-sudo apt-get -y install lynx
 
 # Scan code before compiling the code
 tools/github/scan.sh
