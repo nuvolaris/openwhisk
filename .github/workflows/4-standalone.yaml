@@ -20,7 +20,9 @@ name: Standalone Tests
 on:
   # build on push
   push:
-    tags: '*'
+    tags:
+     - '*stand*'
+     - '*all*'    
     branches-ignore: '*'
   # build on pull requests
   pull_request:
