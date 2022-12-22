@@ -40,7 +40,8 @@ tasks:
        then ls -1 *.yml | sed -e 's/.yml//' -e 's/^/- /'
        echo "edit(@)" or run  with '"task yaml -- [@]<script>"'
        elif test "${A:0:1}" = "@"
-       then code ${A:1}.yml roles/${A:1}/tasks/deploy.yml
+       then test -e ${A:1}.yml  && code ${A:1}.yml 
+            test -e roles/${A:1}/tasks/deploy.yml && code roles/${A:1}/tasks/deploy.yml
        else ansible-playbook -i environments/local -e docker_image_prefix=testing "$A".yml
        fi
     dir: ansible
@@ -66,7 +67,6 @@ tasks:
        then code tools/github/run${A:1}Tests.sh
        else echo ./tools/github/run${A:1}Tests.sh
        fi
-    dir: openwhisk
  
   setups:
     silent: true
@@ -77,8 +77,8 @@ tasks:
        then ls tools/travis/setup* | sed -e 's!^.*setup\(.*\)Tests.sh$!- \1!'
        echo "edit(@)" or run  with '"task yaml -- [@]<script>"'
        elif test "${A:0:1}" = "@"
-       then code tools/github/run${A:1}Tests.sh
-       else echo ./tools/github/run${A:1}Tests.sh
+       then code tools/travis/setup${A:1}.sh
+       else echo ./tools/travis/setup${A:1}.sh
        fi 
 
   snap: 
