@@ -28,7 +28,7 @@ COPY init.sh /
 RUN chmod +x init.sh
 
 RUN useradd -m -u ${UID} -d /home/${NOT_ROOT_USER} -s /bin/bash ${NOT_ROOT_USER} ;\
-    echo -e '#!'"/bin/bash\ncd /home/${NOT_ROOT_USER}\n./init.sh "'"$@"' >/init.sh ;\
+    echo '#!'"/bin/bash\ncd /home/${NOT_ROOT_USER}\n./init.sh "'"$@"' >/init.sh ;\
     chmod +x /init.sh
 
 USER ${NOT_ROOT_USER}
