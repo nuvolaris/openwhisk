@@ -27,9 +27,8 @@ vars:
   T: "all"
 
 tasks:
-
-  setup: 
-    silent: true
+  default: task --list-all
+  setup: {"silent": true}
 
   yaml: 
     silent: true
@@ -74,8 +73,8 @@ tasks:
      - |-
        A="{{.CLI_ARGS}}"
        if test -z "$A"
-       then ls tools/travis/setup* | sed -e 's!^.*setup\(.*\)Tests.sh$!- \1!'
-       echo "edit(@)" or run  with '"task yaml -- [@]<script>"'
+       then ls tools/travis/setup* | sed -e 's!^.*setup\(..*\).sh$!- \1!'
+       echo "edit(@)" or run  with '"task setups -- [@]<script>"'
        elif test "${A:0:1}" = "@"
        then code tools/travis/setup${A:1}.sh
        else echo ./tools/travis/setup${A:1}.sh
