@@ -1,0 +1,31 @@
+- hosts: controllers
+  vars:
+    host_group: "{{ groups['controllers'] }}"
+    name_prefix: "controller"
+    controller_index_base: 0
+
+  tasks:
+  - name: get controller name and index
+    set_fact:
+      controller_name: "{{ name_prefix ~ host_group.index(inventory_hostname) }}"
+      controller_index:
+        "{{ (controller_index_base|int) + host_group.index(inventory_hostname) }}"
+
+  - name: copy jmxremote password file
+    when: jmx.enabled
+    template:
+      src: "jmxremote.password.j2"
+      dest: "{{ controller.confdir }}/{{ controller_name }}/jmxremote.password"
+      mode: 0777
+
+  - name: copy jmxremote access file
+    when: jmx.enabled
+    template:
+      src: "jmxremote.access.j2"
+      dest: "{{ controller.confdir }}/{{ controller_name }}/jmxremote.access"
+      mode: 0777
+
+  - debug:
+      msg: "conf dir: {{ controller.confdir }}/{{ controller_name }}"
+
+

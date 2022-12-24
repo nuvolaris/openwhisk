@@ -1,0 +1,15 @@
+## setup
+cd work/openwhisk/openwhisk
+alias ans="ansible-playbook -i environments/local -e docker_image_prefix=testing"
+cd ansible
+
+## edit and rebuid images
+vi roles/controller/tasks/deploy.yml
+./gradlew :core:controller:distDocker -PdockerImagePrefix=testing
+
+## recreate controller
+ans  controller.yml -e mode=clean
+docker login #remenber this
+ans controller.yml 
+
+
