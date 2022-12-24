@@ -21,4 +21,8 @@
 export CONTROLLER_OPTS
 CONTROLLER_OPTS="$CONTROLLER_OPTS -Dakka.remote.netty.tcp.bind-hostname=$(hostname -i) $(/transformEnvironment.sh)"
 
+for i in $JAVA_OPTS $CONTROLLER_OPTS
+do echo $i >>/logs/java_controller_opts.log
+done
+
 exec controller/bin/controller "$@"
