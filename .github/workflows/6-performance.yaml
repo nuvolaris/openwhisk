@@ -20,6 +20,10 @@ name: Performance Tests
 on:
   # build on push
   push:
+    tags:
+     - '*perf*'
+     - '*all*'
+    branches-ignore: '*'
   # build on pull requests
   pull_request:
 
@@ -41,7 +45,7 @@ env:
 
   # github
   GH_BUILD: ${{ github.event_name }}-${{ github.sha }}
-  GH_BRANCH: ${{ github.head_ref || github.ref_name }} 
+  GH_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   openwhisk:
@@ -76,7 +80,7 @@ jobs:
       - run: OPENWHISK_HOST="172.17.0.1" USERS="1" REQUESTS_PER_SEC="1" ./gradlew gatlingRun-org.apache.openwhisk.ColdBlockingInvokeSimulation
         continue-on-error: true
       - name: Slack Notification
-        run: > 
+        run: >
              ./tools/github/writeOnSlack.sh
              "[$TEST_SUITE]" ${{ steps.tests.outcome }} on ${GH_BUILD}
              $'\nbranch:' $GH_BRANCH

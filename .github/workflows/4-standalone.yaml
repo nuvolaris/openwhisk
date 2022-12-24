@@ -20,6 +20,10 @@ name: Standalone Tests
 on:
   # build on push
   push:
+    tags:
+     - '*stand*'
+     - '*all*'
+    branches-ignore: '*'
   # build on pull requests
   pull_request:
 
@@ -41,7 +45,7 @@ env:
 
   # github
   GH_BUILD: ${{ github.event_name }}-${{ github.sha }}
-  GH_BRANCH: ${{ github.head_ref || github.ref_name }} 
+  GH_BRANCH: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   openwhisk:
@@ -59,7 +63,7 @@ jobs:
         name: Show results and Upload logs
         run: ./tools/github/checkAndUploadLogs.sh ${{ env.TEST_SUITE }}
       - name: Slack Notification
-        run: > 
+        run: >
              ./tools/github/writeOnSlack.sh
              "[$TEST_SUITE]" ${{ steps.tests.outcome }} on ${GH_BUILD}
              $'\nbranch:' $GH_BRANCH
