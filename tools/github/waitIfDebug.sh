@@ -24,7 +24,7 @@ echo "Do touch /tmp/continue to continue."
 echo "Do touch /tmp/abort to abort."
 
 EXIT=0
-for i in $(seq 1 60)
+for i in $(seq 1 120)
 do
    if test -e /tmp/continue ; then EXIT=0 ; break ; fi
    if test -e /tmp/abort ; then EXIT=1 ; break ; fi
