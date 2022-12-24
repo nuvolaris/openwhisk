@@ -21,4 +21,8 @@
 export INVOKER_OPTS
 INVOKER_OPTS="$INVOKER_OPTS $(/transformEnvironment.sh)"
 
+for i in $JAVA_OPTS $INVOKER_OPTS
+do echo $i >>/logs/java_invoker_opts.log
+done
+
 exec invoker/bin/invoker "$@"

@@ -45,7 +45,7 @@ sudo systemctl start docker
 
 # installing right version of jdk
 JDK=https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.12%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz
-curl -sL $JDK | sudo tar xzf - -C /usr/local
+curl -sL $JDK | sudo tar xzvf - -C /usr/local
 JAVA="$(which java)"
 sudo mv "$JAVA" "$JAVA"."$(date +%s)"
 sudo ln -sf /usr/local/jdk*/bin/java $JAVA
