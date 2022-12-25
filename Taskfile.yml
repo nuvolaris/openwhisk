@@ -80,6 +80,12 @@ tasks:
        else echo ./tools/travis/setup${A:1}.sh
        fi 
 
+  image-tag:
+    - cd ..; task image-tag ; git tag >.tag ; cd -
+    - git tag -d $(git tag)
+    - git tag $(cat ../.tag)-{{.T}}
+    - git tag
+
   snap: 
     silent: true
     cmds:
