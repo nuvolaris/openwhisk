@@ -22,12 +22,12 @@ RUN apt-get update && apt-get -y upgrade &&\
     curl wget gpg unzip zip vim telnet \
     silversearcher-ag inetutils-ping locales &&\
     locale-gen en_US.UTF-8
-RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /usr/share/keyrings/docker-archive-keyring.gpg &&\
-    wget -O- https://apt.corretto.aws/corretto.key | apt-key add -
-RUN ARCH=$(dpkg --print-architecture) ;\
-    echo "deb [arch=$ARCH signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list &&\
-    add-apt-repository 'deb https://apt.corretto.aws stable main'
-RUN apt-get -y install java-11-amazon-corretto-jdk=1:11.0.17.8-1
+
+# installing openjdk
+RUN bash -c 'x86_64="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.17%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.17_8.tar.gz" ;\
+aarch64="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.17%2B8/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.17_8.tar.gz";\
+arch=$(arch) ; JDK=${!arch} ; curl -sL $JDK | tar xzvf - -C /usr/local ;\
+ln -sf /usr/local/jdk-*/bin/java /usr/bin/java'
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en

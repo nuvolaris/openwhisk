@@ -43,14 +43,14 @@ sudo sed -i -e 's!/usr/bin/dockerd -H fd://!/usr/bin/dockerd -H tcp://0.0.0.0:42
 sudo systemctl daemon-reload
 sudo systemctl start docker
 
-# installing right version of jdk
-#JDK=https://github.com/ibmruntimes/semeru11-binaries/releases/download/jdk-11.0.12%2B7_openj9-0.27.0/ibm-semeru-open-jdk_x64_linux_11.0.12_7_openj9-0.27.0.tar.gz
-JDK=https://corretto.aws/downloads/resources/11.0.17.8.1/amazon-corretto-11.0.17.8.1-linux-x64.tar.gz
-curl -sL $JDK | sudo tar xzvf - -C /usr/local
+# installing openjdk
+x86_64="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.17%2B8/OpenJDK11U-jdk_x64_linux_hotspot_11.0.17_8.tar.gz" ;\
+aarch64="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.17%2B8/OpenJDK11U-jdk_aarch64_linux_hotspot_11.0.17_8.tar.gz";\
+arch=$(arch) ; JDK=${!arch} ; curl -sL $JDK | sudo tar xzvf - -C /usr/local
+
 JAVA="$(which java)"
 sudo mv "$JAVA" "$JAVA"."$(date +%s)"
-#sudo ln -sf /usr/local/jdk*/bin/java $JAVA
-sudo ln -sf /usr/local/amazon*/bin/java $JAVA
+sudo ln -sf /usr/local/jdk*/bin/java $JAVA
 java -version
 
 # Python
