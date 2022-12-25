@@ -100,3 +100,4 @@ core/routemgmt/getApi/utils.js
 # vscode metals
 .bloop/
 .metals/
+.git-hooks/
