@@ -32,6 +32,10 @@ import common.WhiskProperties
 @RunWith(classOf[JUnitRunner])
 class SwaggerTests extends FlatSpec with Matchers with RestUtil {
 
+
+  // disabiling this test because I do not include swagger API
+  assume(false)
+
   "Whisk API service" should "respond to /docs with Swagger UI" in {
     val response = RestAssured.given().config(sslconfig).get(getServiceURL() + "/api/v1/docs/index.html")
 
