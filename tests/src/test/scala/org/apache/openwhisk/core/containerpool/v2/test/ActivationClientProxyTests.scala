@@ -1,4 +1,4 @@
-q/*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
@@ -224,7 +224,7 @@ class ActivationClientProxyTests
 
     probe expectTerminated machine
   }
-  
+
   it should "retry to request activation message when scheduler response no activation message" in within(timeout) {
     val fetch = (_: FetchRequest) => Future(grpc.FetchResponse(AResponse(Left(NoActivationMessage())).serialize))
     val client = (_: String, _: FullyQualifiedEntityName, _: String, _: Int, _: Boolean) =>
@@ -435,7 +435,7 @@ class ActivationClientProxyTests
     probe expectTerminated machine
   }
 
-  // ** Registers the transition callback and expects the first message * /
+  /** Registers the transition callback and expects the first message */
   def registerCallback(c: ActorRef, probe: TestProbe) = {
     c ! SubscribeTransitionCallBack(probe.ref)
     probe.expectMsg(CurrentState(c, ClientProxyUninitialized))
