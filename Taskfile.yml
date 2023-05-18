@@ -31,7 +31,7 @@ tasks:
   setup: {"silent": true}
   origin:
     - git fetch --all
-    - git checkout origin/main -B nuvolaris
+    - git checkout origin/nuvolaris -B nuvolaris
 
   yaml: 
     silent: true
