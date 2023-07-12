@@ -29,9 +29,6 @@ vars:
 tasks:
   default: task --list-all
   setup: {"silent": true}
-  origin:
-    - git fetch --all
-    - git checkout origin/nuvolaris -B nuvolaris
 
   yaml: 
     silent: true
