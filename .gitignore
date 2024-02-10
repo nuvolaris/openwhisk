@@ -101,3 +101,4 @@ core/routemgmt/getApi/utils.js
 .bloop/
 .metals/
 .git-hooks/
+*.tar
