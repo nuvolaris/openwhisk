@@ -230,7 +230,8 @@ protected[core] case class SequenceExecMetaData(components: Vector[FullyQualifie
 
 object Exec extends ArgNormalizer[Exec] with DefaultJsonProtocol {
 
-  val maxSize: ByteSize = 48.MB
+  // Nuvolaris change
+  val maxSize: ByteSize = 128.MB
   val sizeLimit = loadConfigOrThrow[ByteSize](ConfigKeys.execSizeLimit)
 
   require(
